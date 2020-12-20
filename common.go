@@ -1,4 +1,4 @@
-package euler
+package puzzle
 
 // Solution is a function that can be called to produce a Euler puzzle solution
 type Solution func() int

@@ -1,3 +1,5 @@
-module github.com/dnnrly/euler
+module github.com/dnnrly/puzzle-template
 
 go 1.13
+
+require github.com/stretchr/testify v1.6.1

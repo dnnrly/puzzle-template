@@ -1,11 +1,15 @@
 
 .PHONY: run-all
 run-all:
-	go run cmd/euler/main.go
+	go run cmd/puzzle/main.go
 
 .PHONY: latest
 latest:
-	go run cmd/euler/main.go latest
+	go run cmd/puzzle/main.go latest
+
+.PHONY: test
+test:
+	go test .
 
 .PHONY: next
 next:

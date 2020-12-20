@@ -7,11 +7,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/dnnrly/euler"
+	"github.com/dnnrly/puzzle-template"
 )
 
 // Solutions represents all of the solutions that the application knows about
-var Solutions []euler.Solution = []euler.Solution{}
+var Solutions []puzzle.Solution = []puzzle.Solution{}
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
