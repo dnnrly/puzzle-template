@@ -40,7 +40,7 @@ func Run(config *Config) error {
 	all := re.FindAll(contents, -1)
 	next := len(all) + 1
 
-	text := fmt.Sprintf("\tSolutions = append(Solutions, euler.Puzzle%03d)\n\t// next puzzle", next)
+	text := fmt.Sprintf("\tSolutions = append(Solutions, puzzle.Puzzle%03d)\n\t// next puzzle", next)
 
 	re = regexp.MustCompile("\t// next puzzle")
 	update := re.ReplaceAllString(string(contents), text)
