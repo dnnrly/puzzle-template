@@ -15,7 +15,7 @@ test:
 acceptance-test:
 	make next
 	make next
-	go build
+	go build ./cmd/puzzle
 
 .PHONY: reset
 reset:
