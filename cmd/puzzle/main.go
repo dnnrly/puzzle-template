@@ -57,6 +57,5 @@ func main() {
 }
 
 func initPuzzles() {
-	Solutions = append(Solutions, puzzle.Puzzle001)
 	// next puzzle
 }
