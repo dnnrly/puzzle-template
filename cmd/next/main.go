@@ -3,17 +3,37 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"regexp"
+
+	"github.com/apex/log"
+	"github.com/spf13/afero"
 )
 
-func main() {
-	src := "cmd/euler/main.go"
+// Config contains all of the different things that might change between tests and real main
+type Config struct {
+	fs  afero.Fs
+	log log.Interface
+}
 
-	f, err := os.Open(src)
+func main() {
+	err := Run(&Config{
+		fs: afero.NewOsFs(),
+	})
+
 	if err != nil {
-		log.Fatalf("unable to open file: %v", err)
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
+	}
+}
+
+// Run executes the command business logic
+func Run(config *Config) error {
+	src := "cmd/puzzle/main.go"
+
+	f, err := config.fs.Open(src)
+	if err != nil {
+		return fmt.Errorf("unable to read main file: %w", err)
 	}
 	defer f.Close()
 
@@ -26,9 +46,9 @@ func main() {
 
 	re = regexp.MustCompile("\t// next puzzle")
 	update := re.ReplaceAllString(string(contents), text)
-	err = ioutil.WriteFile(src, []byte(update), 0660)
+	err = afero.WriteFile(config.fs, src, []byte(update), 0660)
 	if err != nil {
-		log.Fatalf("unable to write main file: %v", err)
+		return fmt.Errorf("unable to write main file: %w", err)
 	}
 
 	puzzle := fmt.Sprintf(`package euler
@@ -37,14 +57,17 @@ func Puzzle%03d() int {
 	return 0
 }`, next)
 
-	err = ioutil.WriteFile(
+	err = afero.WriteFile(
+		config.fs,
 		fmt.Sprintf("puzzle%03d.go", next),
 		[]byte(puzzle),
 		0660,
 	)
 	if err != nil {
-		log.Fatalf("unable to write puzzle file: %v", err)
+		return err
 	}
 
 	fmt.Printf("Created Puzzle%03d\n", next)
+
+	return nil
 }

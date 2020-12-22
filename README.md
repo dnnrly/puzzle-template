@@ -25,6 +25,8 @@ If there are ANY problems with this template then feel free to raise an issue an
 
 ## Running your puzzles
 
+All of these steps assume that you have Make installed. If you don't you can check out the contents of `Makefile` to see the real shell command being run for each target.
+
 To run all of your puzzles:
 ```bash
 $ make run-all
@@ -64,14 +66,9 @@ $ make test
 
 ## Contributing to this template
 
-To add to these tests, you will also need to make sure you have installed Godog to run the acceptance tests:
-```bash
-$ go get github.com/cucumber/godog/cmd/godog
-```
-
 To run the tests you will need to do the following:
 ```bash
 $ make acceptance-test
 ```
 
-I'm afraid I'm not sure whether Godog will work if you're developing on your phone.
+This will run the tests for the different individual commands.
