@@ -15,9 +15,7 @@ test:
 acceptance-test:
 	make next
 	make next
-	make
-	git clean -f
-	git reset --hard HEAD
+	go build
 
 .PHONY: reset
 reset:
