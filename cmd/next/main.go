@@ -6,14 +6,12 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/apex/log"
 	"github.com/spf13/afero"
 )
 
 // Config contains all of the different things that might change between tests and real main
 type Config struct {
-	fs  afero.Fs
-	log log.Interface
+	fs afero.Fs
 }
 
 func main() {
