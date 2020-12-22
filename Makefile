@@ -13,6 +13,19 @@ test:
 
 .PHONY: acceptance-test
 acceptance-test:
+	make next
+	make next
+	make
+	git clean -f
+	git reset --hard HEAD
+
+.PHONY: reset
+reset:
+	git clean -f
+	git reset --hard HEAD
+
+.PHONY: test-all
+test-all:
 	go test ./cmd/puzzle
 	go test ./cmd/next
 
