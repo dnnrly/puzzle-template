@@ -67,5 +67,6 @@ func TestRunCreatesPuzzleFile(t *testing.T) {
 
 	contents, err := afero.ReadFile(memFs, "puzzle001.go")
 	assert.NoError(t, err)
+	assert.Contains(t, string(contents), "package puzzle")
 	assert.Contains(t, string(contents), "func Puzzle001() int")
 }

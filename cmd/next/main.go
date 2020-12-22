@@ -49,7 +49,7 @@ func Run(config *Config) error {
 		return fmt.Errorf("unable to write main file: %w", err)
 	}
 
-	puzzle := fmt.Sprintf(`package euler
+	puzzle := fmt.Sprintf(`package puzzle
 	
 func Puzzle%03d() int {
 	return 0
