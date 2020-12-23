@@ -27,7 +27,7 @@ func main() {
 
 // Run executes the command business logic
 func Run(config *Config) error {
-	src := "cmd/puzzle/main.go"
+	src := "puzzle.go"
 
 	f, err := config.fs.Open(src)
 	if err != nil {

@@ -26,7 +26,7 @@ func main() {
 	err := Run(&Config{
 		args:    os.Args,
 		logf:    func(f string, a ...interface{}) { log.Printf(f, a...) },
-		puzzles: initPuzzles(),
+		puzzles: puzzle.RegisterPuzzles(),
 	})
 
 	if err != nil {
@@ -80,12 +80,4 @@ func Run(c *Config) error {
 	}
 
 	return nil
-}
-
-func initPuzzles() []puzzle.Puzzle {
-	puzzles := []puzzle.Puzzle{}
-
-	// next puzzle
-
-	return puzzles
 }

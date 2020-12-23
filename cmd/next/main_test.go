@@ -10,7 +10,6 @@ import (
 
 func TestRunDetectsMissingMainFile(t *testing.T) {
 	memFs := afero.NewMemMapFs()
-	memFs.MkdirAll("cmd/puzzle", 0755)
 
 	err := Run(&Config{
 		fs: memFs,
@@ -22,9 +21,12 @@ func TestRunDetectsMissingMainFile(t *testing.T) {
 
 func TestRunFailsWhenWritingInvalidFile(t *testing.T) {
 	memFs := afero.NewMemMapFs()
-	memFs.MkdirAll("cmd/puzzle", 0755)
-	afero.WriteFile(memFs, "cmd/puzzle/main.go", []byte(`func initPuzzles() {
+	afero.WriteFile(memFs, "puzzle.go", []byte(`func RegisterPuzzles() []Puzzle {
+		puzzles := Puzzle{}
+	
 		// next puzzle
+	
+		return puzzles
 	}`), 0644)
 
 	err := Run(&Config{
@@ -37,9 +39,12 @@ func TestRunFailsWhenWritingInvalidFile(t *testing.T) {
 
 func TestRunRegistersNewTest(t *testing.T) {
 	memFs := afero.NewMemMapFs()
-	memFs.MkdirAll("cmd/puzzle", 0755)
-	afero.WriteFile(memFs, "cmd/puzzle/main.go", []byte(`func initPuzzles() {
+	afero.WriteFile(memFs, "puzzle.go", []byte(`func RegisterPuzzles() []Puzzle {
+		puzzles := Puzzle{}
+	
 		// next puzzle
+	
+		return puzzles
 	}`), 0644)
 
 	err := Run(&Config{
@@ -47,7 +52,7 @@ func TestRunRegistersNewTest(t *testing.T) {
 	})
 	assert.NoError(t, err)
 
-	contents, err := afero.ReadFile(memFs, "cmd/puzzle/main.go")
+	contents, err := afero.ReadFile(memFs, "puzzle.go")
 	assert.NoError(t, err)
 	assert.Contains(t, string(contents), "puzzles = append(puzzles, puzzle.Puzzle001)")
 	assert.Contains(t, string(contents), "// next puzzle")
@@ -55,9 +60,12 @@ func TestRunRegistersNewTest(t *testing.T) {
 
 func TestRunCreatesPuzzleFile(t *testing.T) {
 	memFs := afero.NewMemMapFs()
-	memFs.MkdirAll("cmd/puzzle", 0755)
-	afero.WriteFile(memFs, "cmd/puzzle/main.go", []byte(`func initPuzzles() {
+	afero.WriteFile(memFs, "puzzle.go", []byte(`func RegisterPuzzles() []Puzzle {
+		puzzles := Puzzle{}
+	
 		// next puzzle
+	
+		return puzzles
 	}`), 0644)
 
 	err := Run(&Config{
