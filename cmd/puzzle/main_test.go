@@ -114,3 +114,43 @@ func TestRunFailsWithUnparsableParameters(t *testing.T) {
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "'rubbish' is not an option")
 }
+
+func TestRunFailsWithUnknownTest(t *testing.T) {
+	logs := []string{}
+	config := &Config{
+		args: []string{".binary", "4"},
+		logf: func(f string, a ...interface{}) {
+			fmt.Printf(f+"\n", a...)
+			logs = append(logs, fmt.Sprintf(f, a...))
+		},
+		puzzles: []puzzle.Puzzle{
+			func() int { return 1 },
+			func() int { return 2 },
+			func() int { return 3 },
+		},
+	}
+	err := Run(config)
+
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "3 out of range, there are only 3 puzzles registered so far")
+}
+
+func TestRunFailsWithImpossibleTest(t *testing.T) {
+	logs := []string{}
+	config := &Config{
+		args: []string{".binary", "0"},
+		logf: func(f string, a ...interface{}) {
+			fmt.Printf(f+"\n", a...)
+			logs = append(logs, fmt.Sprintf(f, a...))
+		},
+		puzzles: []puzzle.Puzzle{
+			func() int { return 1 },
+			func() int { return 2 },
+			func() int { return 3 },
+		},
+	}
+	err := Run(config)
+
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "you cannot specify test 0 or under")
+}

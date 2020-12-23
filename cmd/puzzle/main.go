@@ -59,13 +59,17 @@ func Run(c *Config) error {
 				return fmt.Errorf("'%s' is not an option", k)
 			}
 
+			if i <= 0 {
+				return fmt.Errorf("you cannot specify test 0 or under")
+			}
+
 			i--
-			if i < 0 || i >= len(c.puzzles) {
-				panic(fmt.Sprintf(
-					"%d out of range, there are only %d puzzles registered so far\n",
+			if i >= len(c.puzzles) {
+				return fmt.Errorf(
+					"%d out of range, there are only %d puzzles registered so far",
 					i,
 					len(c.puzzles),
-				))
+				)
 			}
 
 			start := time.Now()
