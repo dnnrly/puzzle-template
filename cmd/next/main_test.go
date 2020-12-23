@@ -49,7 +49,7 @@ func TestRunRegistersNewTest(t *testing.T) {
 
 	contents, err := afero.ReadFile(memFs, "cmd/puzzle/main.go")
 	assert.NoError(t, err)
-	assert.Contains(t, string(contents), "append(Solutions, puzzle.Puzzle001)")
+	assert.Contains(t, string(contents), "puzzles = append(puzzles, puzzle.Puzzle001)")
 	assert.Contains(t, string(contents), "// next puzzle")
 }
 

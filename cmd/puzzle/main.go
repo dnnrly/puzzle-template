@@ -10,9 +10,6 @@ import (
 	"github.com/dnnrly/puzzle-template"
 )
 
-// Puzzles represents all of the solutions that the application knows about
-var Puzzles []puzzle.Puzzle = []puzzle.Puzzle{}
-
 // Logger sends log entries to a real logger
 type Logger func(f string, a ...interface{})
 
@@ -25,12 +22,11 @@ type Config struct {
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
-	initPuzzles()
 
 	err := Run(&Config{
 		args:    os.Args,
 		logf:    func(f string, a ...interface{}) { log.Printf(f, a...) },
-		puzzles: Puzzles,
+		puzzles: initPuzzles(),
 	})
 
 	if err != nil {
@@ -82,6 +78,10 @@ func Run(c *Config) error {
 	return nil
 }
 
-func initPuzzles() {
+func initPuzzles() []puzzle.Puzzle {
+	puzzles := []puzzle.Puzzle{}
+
 	// next puzzle
+
+	return puzzles
 }
