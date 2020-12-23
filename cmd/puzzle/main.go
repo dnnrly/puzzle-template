@@ -53,10 +53,10 @@ func Run(c *Config) error {
 		total := time.Now().Sub(start).Milliseconds()
 		c.logf("%03d %3d - %d", total, i+1, n)
 	} else {
-		for _, k := range os.Args[1:] {
+		for _, k := range c.args[1:] {
 			i, err := strconv.Atoi(k)
 			if err != nil {
-				panic(err)
+				return fmt.Errorf("'%s' is not an option", k)
 			}
 
 			i--
