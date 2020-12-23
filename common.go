@@ -1,8 +1,5 @@
 package puzzle
 
-// Puzzle is a function that can be called to produce a Euler puzzle solution
-type Puzzle func() int
-
 // IsPythagorean is intended to tell you whether these numbers make a
 // pythagorean triplet
 func IsPythagorean(a, b, c int) bool {
