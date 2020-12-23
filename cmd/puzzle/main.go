@@ -41,21 +41,21 @@ func main() {
 
 // Run executes the command business logic
 func Run(c *Config) error {
-	c.logf("There are %d solutions\n", len(Puzzles))
+	c.logf("There are %d solutions", len(c.puzzles))
 
 	if len(c.args) == 1 {
 		for k, s := range c.puzzles {
 			start := time.Now()
 			n := s()
 			total := time.Now().Sub(start).Milliseconds()
-			c.logf("%03d %3d - %d\n", total, k+1, n)
+			c.logf("%03d %3d - %d", total, k+1, n)
 		}
 	} else if c.args[1] == "latest" {
 		start := time.Now()
 		i := len(c.puzzles) - 1
 		n := c.puzzles[i]()
 		total := time.Now().Sub(start).Milliseconds()
-		c.logf("%03d %3d - %d\n", total, i+1, n)
+		c.logf("%03d %3d - %d", total, i+1, n)
 	} else {
 		for _, k := range os.Args[1:] {
 			i, err := strconv.Atoi(k)
@@ -75,7 +75,7 @@ func Run(c *Config) error {
 			start := time.Now()
 			n := c.puzzles[i]()
 			total := time.Now().Sub(start).Milliseconds()
-			c.logf("%03d %3d - %d\n", total, i+1, n)
+			c.logf("%03d %3d - %d", total, i+1, n)
 		}
 	}
 
