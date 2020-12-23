@@ -13,8 +13,8 @@ test:
 
 .PHONY: acceptance-test
 acceptance-test:
-	make next
-	make next
+	go run cmd/next/main.go
+	go run cmd/next/main.go
 	go build ./cmd/puzzle
 
 .PHONY: reset
