@@ -41,17 +41,11 @@ func Run(c *Config) error {
 
 	if len(c.args) == 1 {
 		for k, s := range c.puzzles {
-			start := time.Now()
-			n := s()
-			total := time.Now().Sub(start).Milliseconds()
-			c.logf("%03d %3d - %d", total, k+1, n)
+			runPuzzle(k+1, s, c.logf)
 		}
 	} else if c.args[1] == "latest" {
-		start := time.Now()
 		i := len(c.puzzles) - 1
-		n := c.puzzles[i]()
-		total := time.Now().Sub(start).Milliseconds()
-		c.logf("%03d %3d - %d", total, i+1, n)
+		runPuzzle(i+1, c.puzzles[i], c.logf)
 	} else {
 		for _, k := range c.args[1:] {
 			i, err := strconv.Atoi(k)
@@ -72,12 +66,18 @@ func Run(c *Config) error {
 				)
 			}
 
-			start := time.Now()
-			n := c.puzzles[i]()
-			total := time.Now().Sub(start).Milliseconds()
-			c.logf("%03d %3d - %d", total, i+1, n)
+			runPuzzle(i+1, c.puzzles[i], c.logf)
 		}
 	}
 
 	return nil
+}
+
+func runPuzzle(k int, puz puzzle.Puzzle, logf Logger) {
+	for i, p := range puz.Parts {
+		start := time.Now()
+		n := p()
+		total := time.Now().Sub(start).Milliseconds()
+		logf("%03d %3d.%d - %d", total, k, i+1, n)
+	}
 }
