@@ -5,6 +5,7 @@ type Solution func() int
 
 // Puzzle is a function that can be called to produce a Euler puzzle solution
 type Puzzle struct {
+	Init  func()
 	Parts []Solution
 }
 
