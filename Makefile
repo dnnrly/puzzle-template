@@ -15,7 +15,7 @@ test:
 acceptance-test:
 	go run cmd/next/main.go
 	go run cmd/next/main.go
-	go build ./cmd/puzzle
+	go run cmd/puzzle/main.go
 
 .PHONY: reset
 reset:
