@@ -50,7 +50,48 @@ It is possible to generate a new file for your next puzzle using the following c
 $ make next
 ```
 
-After this, it's up to you to solve the puzzle. I would recommend something like the following when you figure out the answer:
+After this, it's up to you to solve the puzzle. The thing that's just been generated will look a little like this:
+```go
+func Puzzle001() Puzzle {
+    // In this function, you can add large strings (your input data, perhaps) so
+    // that they can be parsed in the initialisation phase of the puzzle and won't
+    // count to the time taken for your algorithm.
+    data := `1
+2
+3`
+
+    // You can add multiple variables that you use later on if you wish.
+    values := []int{}
+
+    // And you can even add helpers that can be called only from inside your
+    // puzzle solution.
+    convert := func(s string) int {
+        v, _ := strconv.Atoi(s)
+        return v
+    }
+
+    return Puzzle{
+        // Init will be called before any of the solutions. Do all of your
+        // expsensive pre-processing here.
+        Init: func() {
+            lines := strings.Split(data, "\n")
+            for _, l := range lines {
+                values = append(values, convert(l))
+            }
+        },
+		// Parts contains all of the different sub-solutions that you need
+		// to implement (looking at you Advent of Code).
+        Parts: []Solution{
+            // You can consume the pre-processed data in the solutions here
+            func() int { return values[0] + 100 },
+            func() int { return values[1] + 100 },
+            func() int { return values[2] + 100 },
+        },
+    }
+}
+```
+
+Once you've got the answers you need, I would recommend something like the following:
 ```bash
 $ git add .
 $ git commit -m "Add solution to puzzle $(ls -l | grep puzzle | wc -l)"
@@ -63,6 +104,8 @@ Sometimes it's necessary to check that your code is doing what you expect withou
 ```bash
 $ make test
 ```
+
+Just beware, if you create your helper functions inside your generated puzzle function then they won't be accessible from your tests. To get around this, just create them outside of this function. And remember that `common.go` has been created for those helpers that you think might be used by several puzzles.
 
 ## Contributing to this template
 
