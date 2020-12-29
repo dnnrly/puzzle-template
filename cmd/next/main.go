@@ -40,7 +40,7 @@ func Run(config *Config) error {
 	all := re.FindAll(contents, -1)
 	next := len(all) + 1
 
-	text := fmt.Sprintf("\tpuzzles = append(puzzles, puzzle.Puzzle%03d)\n\t// next puzzle", next)
+	text := fmt.Sprintf("\tpuzzles = append(puzzles, Puzzle%03d())\n\t// next puzzle", next)
 
 	re = regexp.MustCompile("\t// next puzzle")
 	update := re.ReplaceAllString(string(contents), text)
@@ -50,10 +50,30 @@ func Run(config *Config) error {
 	}
 
 	puzzle := fmt.Sprintf(`package puzzle
-	
-func Puzzle%03d() int {
-	return 0
-}`, next)
+
+// Puzzle%03d is the solutions for puzzle %d
+func Puzzle%03d() Puzzle {
+	// Here's where you put some extra data you might need to process
+	data := ""
+
+	// You can create helpers like this that can be called later
+	processData := func() {
+		data += "a"
+	}
+
+	return Puzzle {
+		// Init will be called before any of the solutions. Do all of your
+		// expsensive pre-processing here.
+		Init: func() {
+			processData()
+		},
+		// Parts contains all of the different sub-solutions that you need
+		// to implement (looking at you Advent of Code).
+		Parts: []Solution{
+			func() int { return 0 },
+		},
+	}
+}`, next, next, next)
 
 	err = afero.WriteFile(
 		config.fs,
