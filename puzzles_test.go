@@ -96,7 +96,7 @@ func ExamplePuzzle_complex_initialisation_with_helper_functions() {
 	}
 
 	// Output:
-	// Solution 0 is 100
-	// Solution 1 is 101
-	// Solution 2 is 101
+	// Solution 0 is 101
+	// Solution 1 is 102
+	// Solution 2 is 103
 }
