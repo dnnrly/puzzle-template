@@ -74,6 +74,12 @@ func Run(c *Config) error {
 }
 
 func runPuzzle(k int, puz puzzle.Puzzle, logf Logger) {
+	if puz.Init != nil {
+		start := time.Now()
+		puz.Init()
+		total := time.Now().Sub(start).Milliseconds()
+		logf("%03d %3d Init", total, k)
+	}
 	for i, p := range puz.Parts {
 		start := time.Now()
 		n := p()

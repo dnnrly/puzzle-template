@@ -13,6 +13,7 @@ import (
 func testPuzzles() []puzzle.Puzzle {
 	return []puzzle.Puzzle{
 		puzzle.Puzzle{
+			Init: func() {},
 			Parts: []puzzle.Solution{
 				func() int { return 1 },
 				func() int { return 2 },
@@ -27,6 +28,7 @@ func testPuzzles() []puzzle.Puzzle {
 			},
 		},
 		puzzle.Puzzle{
+			Init: func() {},
 			Parts: []puzzle.Solution{
 				func() int { return 7 },
 				func() int { return 8 },
@@ -66,12 +68,15 @@ func TestRuns3PuzzlesWithtoutError(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Contains(t, logs, "There are 3 solutions")
+	assert.Contains(t, logs, "000   1 Init")
 	assert.Contains(t, logs, "000   1.1 - 1")
 	assert.Contains(t, logs, "000   1.2 - 2")
 	assert.Contains(t, logs, "000   1.3 - 3")
+	assert.NotContains(t, logs, "000   2 Init")
 	assert.Contains(t, logs, "000   2.1 - 4")
 	assert.Contains(t, logs, "000   2.2 - 5")
 	assert.Contains(t, logs, "000   2.3 - 6")
+	assert.Contains(t, logs, "000   3 Init")
 	assert.Contains(t, logs, "000   3.1 - 7")
 	assert.Contains(t, logs, "000   3.2 - 8")
 	assert.Contains(t, logs, "000   3.3 - 9")
@@ -91,12 +96,14 @@ func TestRunsLatestWithtoutError(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Contains(t, logs, "There are 3 solutions")
+	assert.NotContains(t, logs, "000   1 Init")
 	assert.NotContains(t, logs, "000   1.1 - 1")
 	assert.NotContains(t, logs, "000   1.2 - 2")
 	assert.NotContains(t, logs, "000   1.3 - 3")
 	assert.NotContains(t, logs, "000   2.1 - 4")
 	assert.NotContains(t, logs, "000   2.2 - 5")
 	assert.NotContains(t, logs, "000   2.3 - 6")
+	assert.Contains(t, logs, "000   3 Init")
 	assert.Contains(t, logs, "000   3.1 - 7")
 	assert.Contains(t, logs, "000   3.2 - 8")
 	assert.Contains(t, logs, "000   3.3 - 9")
@@ -116,12 +123,14 @@ func TestRunsSpecificTest(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Contains(t, logs, "There are 3 solutions")
+	assert.NotContains(t, logs, "000   1 Init")
 	assert.NotContains(t, logs, "000   1.1 - 1")
 	assert.NotContains(t, logs, "000   1.2 - 2")
 	assert.NotContains(t, logs, "000   1.3 - 3")
 	assert.Contains(t, logs, "000   2.1 - 4")
 	assert.Contains(t, logs, "000   2.2 - 5")
 	assert.Contains(t, logs, "000   2.3 - 6")
+	assert.NotContains(t, logs, "000   3 Init")
 	assert.NotContains(t, logs, "000   3.1 - 7")
 	assert.NotContains(t, logs, "000   3.2 - 8")
 	assert.NotContains(t, logs, "000   3.3 - 9")
