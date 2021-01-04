@@ -109,9 +109,13 @@ Just beware, if you create your helper functions inside your generated puzzle fu
 
 ## Contributing to this template
 
-To run the tests you will need to do the following:
+Feel free to fork this repository and raise a pull request for any changes.
+
+To run the on the framework as well in the puzzle package, you will need to do the following:
 ```bash
-$ make acceptance-test
+$ make test test-all acceptance-test
 ```
+
+The last target will run the `next` and `puzzle` commands, making sure that the generated code builds and runs - it doesn't do any fancy validation.
 
 This will run the tests for the different individual commands.
