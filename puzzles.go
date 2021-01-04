@@ -7,6 +7,7 @@ type Solution func() int
 type Puzzle struct {
 	Init  func()
 	Parts []Solution
+	Tidy  func()
 }
 
 // Size gives the number of parts for this puzzle

@@ -85,6 +85,13 @@ func ExamplePuzzle_complex_initialisation_with_helper_functions() {
 				func() int { return values[1] + 100 },
 				func() int { return values[2] + 100 },
 			},
+			Tidy: func() {
+				// In this function you can clear down any items that you've created
+				// in memory. In this example, setting the slice to nil allows the
+				// garbage collector to release it. Hopefully this function will allow
+				// you to be able to run ALL of your puzzles together.
+				values = nil
+			},
 		}
 	}
 

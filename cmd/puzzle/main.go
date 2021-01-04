@@ -86,4 +86,10 @@ func runPuzzle(k int, puz puzzle.Puzzle, logf Logger) {
 		total := time.Now().Sub(start).Milliseconds()
 		logf("%03d %3d.%d - %d", total, k, i+1, n)
 	}
+	if puz.Tidy != nil {
+		start := time.Now()
+		puz.Tidy()
+		total := time.Now().Sub(start).Milliseconds()
+		logf("%03d %3d Tidy", total, k)
+	}
 }
